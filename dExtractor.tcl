@@ -261,7 +261,7 @@ namespace eval ::dEx {
 		# - $encoding: encoding name
 		#$FILES is a list of input filenames
 		variable FILES;
-		set d [::dEx::listJoin $DATA $char];
+		set d [::dEx::listJoin $FILES $char];
 		::dEx::output $filePath $d $encoding;
 	};
 };
