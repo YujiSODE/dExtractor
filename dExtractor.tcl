@@ -6,6 +6,7 @@
 #	This software is released under the MIT License.
 #	See LICENSE or http://opensource.org/licenses/mit-license.php
 ##===================================================================
+set dEx_HELP {
 #Simple data extraction interface.
 #=== <Namespace: dEx> ===
 	#== Values ==
@@ -17,11 +18,21 @@
 	#== Main procedures ==
 		# - reset;
 			#it resets internal parameters
+		# - title txt;
+			#it sets title as $txt
 		# - dRead filePath ?char? ?encoding?;
 			#it reads data from a file
 			# - $filePath: file path of file to load
 			# - $char: split characters; standard white-space characters is default value
 			# - $encoding: encoding name
+		# - output_DATA filePath ?char? ?encoding?;
+			#it outputs raw data list
+			# - $filePath: file path of file to output
+			# - $char: separating characters; tab characters is default value
+			# - $encoding: encoding name
+		# - output_FILES filePath ?char? ?encoding?;
+			#it outputs file list
+			#see output_DATA for parameters
 		# - count l ?numerical?;
 			#it counts elements in given list and returns a list of element names
 			# - $l: a list
@@ -33,6 +44,7 @@
 			# - $dx: a number (!$dx<1) that represents a value which is equivalent to a block in a graph; 1 is default value
 			# - $min: the least value (!$min<0) to show in a graph; 0 is default value
 			# - $char: a character that is used as a block in a graph; "\#" is default value
+};
 ##===================================================================
 set auto_noexec 1;
 package require Tcl 8.6;
@@ -60,6 +72,8 @@ namespace eval ::dEx {
 			};
 		};
 	};
+	#it sets title as $txt
+	proc title {txt} {variable TITLE;set TITLE [join $txt _];};
 	#it converts a given data into a list
 	proc toList {x {char {}}} {
 		# - $x: list or data that is separated by a character
@@ -143,6 +157,17 @@ namespace eval ::dEx {
 		foreach e $x {set v [expr {$v>$e?$e:$v}];};
 		return $v;
 	};
+	#it outputs data as given filename
+	proc output {filePath data {encoding {}}} {
+		# - $filePath: file path of file to output
+		# - $data: data to output
+		# - $encoding: encoding name
+		set c [open $filePath w];
+		if {[llength $encoding]} {fconfigure $c -encoding $encoding;};
+		puts -nonewline $c $data;
+		close $c;unset c;
+		return $data;
+	};
 	#it reads data from a file
 	proc dRead {filePath {char {}} {encoding {}}} {
 		# - $filePath: file path of file to load
@@ -158,8 +183,7 @@ namespace eval ::dEx {
 		} else {
 			::dEx::toList [read -nonewline $c];
 		};
-		close $c;
-		unset c;
+		close $c;unset c;
 	};
 	#it estimates graph width that is not less than 1
 	proc width {v {dx 1} {min 0}} {
@@ -219,5 +243,25 @@ namespace eval ::dEx {
 		lappend GRAPH "[llength $FILES] sources:\n$FILES";
 		lappend GRAPH [string repeat \= [expr {$nmMx+$gW+1}]];
 		return [join $GRAPH \n];
+	};
+	#it outputs raw data list
+	proc output_DATA {filePath {char \t} {encoding {}}} {
+		# - $filePath: file path of file to output
+		# - $char: separating characters; tab characters is default value
+		# - $encoding: encoding name
+		#$DATA is a list of raw data
+		variable DATA;
+		set d [::dEx::listJoin $DATA $char];
+		::dEx::output $filePath $d $encoding;
+	};
+	#it outputs file list
+	proc output_FILES {filePath {char \t} {encoding {}}} {
+		# - $filePath: file path of file to output
+		# - $char: separating characters; tab characters is default value
+		# - $encoding: encoding name
+		#$FILES is a list of input filenames
+		variable FILES;
+		set d [::dEx::listJoin $FILES $char];
+		::dEx::output $filePath $d $encoding;
 	};
 };
