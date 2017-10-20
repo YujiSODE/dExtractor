@@ -6,7 +6,6 @@
 #	This software is released under the MIT License.
 #	See LICENSE or http://opensource.org/licenses/mit-license.php
 ##===================================================================
-set dEx_HELP {
 #Simple data extraction interface.
 #=== <Namespace: dEx> ===
 	#== Values ==
@@ -18,25 +17,21 @@ set dEx_HELP {
 	#== Main procedures ==
 		# - reset;
 			#it resets internal parameters
+		#
 		# - title txt;
 			#it sets title as $txt
+		#
 		# - dRead filePath ?char? ?encoding?;
 			#it reads data from a file
 			# - $filePath: file path of file to load
 			# - $char: split characters; standard white-space characters is default value
 			# - $encoding: encoding name
-		# - output_DATA filePath ?char? ?encoding?;
-			#it outputs raw data list
-			# - $filePath: file path of file to output
-			# - $char: separating characters; tab characters is default value
-			# - $encoding: encoding name
-		# - output_FILES filePath ?char? ?encoding?;
-			#it outputs file list
-			#see output_DATA for parameters
+		#
 		# - count l ?numerical?;
 			#it counts elements in given list and returns a list of element names
 			# - $l: a list
 			# - $numerical: boolean (0|1) indicates if it regards data as numerical data; 0 is default value
+		#
 		# - graph elements ?dx? ?min? ?char?;
 			#it makes a graph as ascii art
 			#a block is a unit for dealing with data frequency
@@ -44,7 +39,21 @@ set dEx_HELP {
 			# - $dx: a number (!$dx<1) that represents a value which is equivalent to a block in a graph; 1 is default value
 			# - $min: the least value (!$min<0) to show in a graph; 0 is default value
 			# - $char: a character that is used as a block in a graph; "\#" is default value
-};
+		#
+		# - output_DATA filePath ?char? ?encoding?;
+			#it outputs raw data list
+			# - $filePath: file path of file to output
+			# - $char: separating characters; tab characters is default value
+			# - $encoding: encoding name
+		#
+		# - output_FILES filePath ?char? ?encoding?;
+			#it outputs filename list
+			#see "output_DATA" for parameters
+		#
+		# - output_GRAPH filePath ?encoding?;
+			#it outputs graph result as ascii art
+			# - $filePath: file path of file to output
+			# - $encoding: encoding name
 ##===================================================================
 set auto_noexec 1;
 package require Tcl 8.6;
@@ -251,17 +260,37 @@ namespace eval ::dEx {
 		# - $encoding: encoding name
 		#$DATA is a list of raw data
 		variable DATA;
-		set d [::dEx::listJoin $DATA $char];
-		::dEx::output $filePath $d $encoding;
+		if {[llength $DATA]} {
+			set d [::dEx::listJoin $DATA $char];
+			::dEx::output $filePath $d $encoding;
+		} else {
+			::dEx::output $filePath {NO DATA} $encoding;
+		};
 	};
-	#it outputs file list
+	#it outputs filename list
 	proc output_FILES {filePath {char \t} {encoding {}}} {
 		# - $filePath: file path of file to output
 		# - $char: separating characters; tab characters is default value
 		# - $encoding: encoding name
 		#$FILES is a list of input filenames
 		variable FILES;
-		set d [::dEx::listJoin $FILES $char];
-		::dEx::output $filePath $d $encoding;
+		if {[llength $FILES]} {
+			set d [::dEx::listJoin $FILES $char];
+			::dEx::output $filePath $d $encoding;
+		} else {
+			::dEx::output $filePath {NO DATA} $encoding;
+		};
+	};
+	#it outputs graph result as ascii art
+	proc output_GRAPH {filePath {encoding {}}} {
+		# - $filePath: file path of file to output
+		# - $encoding: encoding name
+		#$GRAPH is a list of graph parts
+		variable GRAPH;
+		if {[llength $GRAPH]} {
+			::dEx::output $filePath [join $GRAPH \n] $encoding;
+		} else {
+			::dEx::output $filePath {NO DATA} $encoding;
+		};
 	};
 };
