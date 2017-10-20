@@ -43,7 +43,7 @@
 		# - output_DATA filePath ?char? ?encoding?;
 			#it outputs raw data list
 			# - $filePath: file path of file to output
-			# - $char: separating characters; tab characters is default value
+			# - $char: separating characters; tab character is default value
 			# - $encoding: encoding name
 		#
 		# - output_FILES filePath ?char? ?encoding?;
@@ -256,7 +256,7 @@ namespace eval ::dEx {
 	#it outputs raw data list
 	proc output_DATA {filePath {char \t} {encoding {}}} {
 		# - $filePath: file path of file to output
-		# - $char: separating characters; tab characters is default value
+		# - $char: separating characters; tab character is default value
 		# - $encoding: encoding name
 		#$DATA is a list of raw data
 		variable DATA;
@@ -270,7 +270,7 @@ namespace eval ::dEx {
 	#it outputs filename list
 	proc output_FILES {filePath {char \t} {encoding {}}} {
 		# - $filePath: file path of file to output
-		# - $char: separating characters; tab characters is default value
+		# - $char: separating characters; tab character is default value
 		# - $encoding: encoding name
 		#$FILES is a list of input filenames
 		variable FILES;
