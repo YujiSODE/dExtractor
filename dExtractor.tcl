@@ -129,7 +129,7 @@ namespace eval ::dEx {
 		if {!!$numerical} {
 			set l_sub {};
 			#rgEx is regular expression that matches real number
-			set rgEx {^(?:[+-]?[0-9]+(?:\.[0-9]+)?(?:e|E[+-]?[0-9]+(?:\.[0-9]+)?)?)$|^(?:\.[0-9]+)$};
+			set rgEx {^(?:[+-]?[0-9]+(?:\.[0-9]+)?(?:[eE][+-]?[0-9]+(?:\.[0-9]+)?)?)$|^(?:\.[0-9]+)$};
 			foreach x $l {
 				if {[regexp $rgEx $x]} {lappend l_sub $x;};
 			};
