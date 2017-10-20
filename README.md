@@ -9,7 +9,12 @@ ______
 ## Script
 It requires Tcl 8.6+.
 - `dExtractor.tcl`
- 
+
+## Synopsis
+1. 
+2. 
+3. 
+
 ## Namespace: `dEx`
 **Main procedures**
 - `reset;`
