@@ -50,6 +50,14 @@
 			#it outputs filename list
 			#see "output_DATA" for parameters
 		#
+		# - output_elements filePath ?char? ?encoding?;
+			#it outputs elements list in a counted array
+			#see "output_DATA" for parameters
+		#
+		#output_table filePath ?char? ?encoding?
+			#it outputs a graph table
+			#see "output_DATA" for parameters
+		#
 		# - output_GRAPH filePath ?encoding?;
 			#it outputs graph result as ascii art
 			# - $filePath: file path of file to output
@@ -140,7 +148,7 @@ namespace eval ::dEx {
 		foreach x $l {
 			#escaping
 			if {!$numerical} {
-				set x [string map {\| \\\| \/ \\\/ \\ \\\\ \; \\\; \: \\\: \( \\\( \) \\\) \[ \\\[ \] \\\] \{ \\\{ \} \\\} \$ \\\$ \! \\\! \? \\? \< \\\< \> \\\> \# \\\# \% \\\% \- \\\- \+ \\\+ \* \\\* \& \\\& \= \\\=} $x];
+				set x [string map {\| \\\| \/ \\\/ \\ \\\\ \. \\\. \, \\\, \; \\\; \: \\\: \( \\\( \) \\\) \[ \\\[ \] \\\] \{ \\\{ \} \\\} \$ \\\$ \! \\\! \? \\? \< \\\< \> \\\> \# \\\# \% \\\% \- \\\- \+ \\\+ \* \\\* \& \\\& \= \\\=} $x];
 			};
 			set x64 [binary encode base64 $x];
 			if {[llength [array names V $x64]]} {
@@ -281,6 +289,41 @@ namespace eval ::dEx {
 			::dEx::output $filePath {NO DATA} $encoding;
 		};
 	};
+	#it outputs elements list in a counted array
+	proc output_elements {filePath {char \t} {encoding {}}} {
+		# - $filePath: file path of file to output
+		# - $char: separating characters; tab character is default value
+		# - $encoding: encoding name
+		#$V is counted array
+		variable V;
+		#E is elements list
+		set E [lmap e [array names V] {binary decode base64 $e;}];
+		if {[llength $E]} {
+			set d [::dEx::listJoin $E $char];
+			::dEx::output $filePath $d $encoding;
+		} else {
+			::dEx::output $filePath {NO DATA} $encoding;
+		};
+	};
+	#it outputs a graph table
+	proc output_table {filePath {char \t} {encoding {}}} {
+		# - $filePath: file path of file to output
+		# - $char: separating characters; tab character is default value
+		# - $encoding: encoding name
+		#$V is counted array
+		variable V;
+		#E and tbl are elements list and table parts list
+		set E [array names V];
+		set tbl {};
+		if {[llength $E]} {
+			foreach e $E {
+				lappend tbl [::dEx::listJoin [list [binary decode base64 $e] $::dEx::V($e)] $char];
+			};
+			::dEx::output $filePath [::dEx::listJoin $tbl \n] $encoding;
+		} else {
+			::dEx::output $filePath {NO DATA} $encoding;
+		};
+	};
 	#it outputs graph result as ascii art
 	proc output_GRAPH {filePath {encoding {}}} {
 		# - $filePath: file path of file to output
@@ -293,4 +336,6 @@ namespace eval ::dEx {
 			::dEx::output $filePath {NO DATA} $encoding;
 		};
 	};
+	#it outputs log
+	proc log {filePath {encoding {}}} {};
 };
