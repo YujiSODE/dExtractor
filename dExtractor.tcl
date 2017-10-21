@@ -6,7 +6,7 @@
 #	This software is released under the MIT License.
 #	See LICENSE or http://opensource.org/licenses/mit-license.php
 ##===================================================================
-#Simple data extraction interface.
+#Simple data extraction tool.
 #=== <Namespace: dEx> ===
 	#== Values ==
 		# - $TITLE: a title of data set
