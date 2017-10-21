@@ -50,8 +50,16 @@ it resets internal parameters
   
 - `output_FILES filePath ?char? ?encoding?;`  
   it outputs filename list
-  - see "output_DATA" for parameters
+  - see "`output_DATA`" for parameters
   
+- `output_elements filePath ?char? ?encoding?;`  
+  it outputs elements list in a counted array
+  - see "`output_DATA`" for parameters
+  
+- `output_table filePath ?char? ?encoding?`  
+  it outputs a graph table
+  - see "`output_DATA`" for parameters
+    
 - `output_GRAPH filePath ?encoding?;`  
   it outputs graph result as ascii art
   - `$filePath`: file path of file to output
