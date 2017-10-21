@@ -54,7 +54,7 @@
 			#it outputs elements list in a counted array
 			#see "output_DATA" for parameters
 		#
-		#output_table {filePath {char \t} {encoding {}}} {
+		#output_table filePath ?char? ?encoding?
 			#it outputs a graph table
 			#see "output_DATA" for parameters
 		#
