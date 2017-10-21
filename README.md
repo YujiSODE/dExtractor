@@ -60,6 +60,11 @@ it resets internal parameters
   it outputs a graph table
   - see "`output_DATA`" for parameters
     
+- `log filePath ?encoding?;`  
+  it outputs log of the current values as tcl script
+  - `$filePath`: file path of file to output
+  - `$encoding`: encoding name
+  
 - `output_GRAPH filePath ?encoding?;`  
   it outputs graph result as ascii art
   - `$filePath`: file path of file to output

@@ -54,9 +54,14 @@
 			#it outputs elements list in a counted array
 			#see "output_DATA" for parameters
 		#
-		#output_table filePath ?char? ?encoding?
+		# - output_table filePath ?char? ?encoding?;
 			#it outputs a graph table
 			#see "output_DATA" for parameters
+		#
+		# - log filePath ?encoding?;
+			#it outputs log of the current values as tcl script
+			# - $filePath: file path of file to output
+			# - $encoding: encoding name
 		#
 		# - output_GRAPH filePath ?encoding?;
 			#it outputs graph result as ascii art
@@ -336,6 +341,24 @@ namespace eval ::dEx {
 			::dEx::output $filePath {NO DATA} $encoding;
 		};
 	};
-	#it outputs log
-	proc log {filePath {encoding {}}} {};
+	#it outputs log of the current values as tcl script
+	proc log {filePath {encoding {}}} {
+		# - $filePath: file path of file to output
+		# - $encoding: encoding name
+		#Log is log data
+		set Log "if \{\[namespace exists ::dEx\]\} \{";
+		foreach x [info vars ::dEx::*] {
+			if {[array exists $x]} {
+				#arrays
+				foreach y [array names $x] {
+					append Log "set $x\($y\) [subst $${x}($y)]\;";
+				};
+			} else {
+				#variables
+				append Log "set $x \{[subst $$x]\}\;";
+			};
+		};
+		append Log "\}\;";
+		::dEx::output $filePath $Log $encoding;
+	};
 };
