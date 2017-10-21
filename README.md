@@ -1,5 +1,5 @@
 # dExtractor
-Simple data extraction interface.  
+Simple data extraction tool.  
 https://github.com/YujiSODE/dExtractor  
 
 >Copyright (c) 2017 Yuji SODE \<yuji.sode@gmail.com\>  
