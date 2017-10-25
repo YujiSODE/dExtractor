@@ -17,7 +17,7 @@ It requires Tcl 8.6+.
 
 ## Namespace: `::dEx`
 **Main procedures**
-- `reset;`
+- `reset;`  
 it resets internal parameters
 
 - `title txt;`  
