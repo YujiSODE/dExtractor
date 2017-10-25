@@ -10,7 +10,7 @@ ______
 It requires Tcl 8.6+.
 - `dExtractor.tcl`
 
-## Synopsis
+## Details
 **Main procedures in namespace \(`::dEx`\)**
 - `reset;`  
 it resets internal parameters
