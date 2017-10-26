@@ -33,7 +33,7 @@
 			# - $numerical: boolean (0|1) indicates if it regards data as numerical data; 0 is default value
 		#
 		# - graph elements ?dx? ?min? ?char?;
-			#it makes a graph as ascii art
+			#it makes a graph as ASCII art
 			#a block is a unit for dealing with data frequency
 			# - $elements: a list of element names that is referred wile using counted array ($::dEx::V)
 			# - $dx: a number (!$dx<1) that represents a value which is equivalent to a block in a graph; 1 is default value
@@ -64,7 +64,7 @@
 			# - $encoding: encoding name
 		#
 		# - output_GRAPH filePath ?encoding?;
-			#it outputs graph result as ascii art
+			#it outputs graph result as ASCII art
 			# - $filePath: file path of file to output
 			# - $encoding: encoding name
 ##===================================================================
@@ -228,7 +228,7 @@ namespace eval ::dEx {
 		#returned value is a list: {$min $max}
 		return [list $min $max];
 	};
-	#it makes a graph as ascii art
+	#it makes a graph as ASCII art
 	proc graph {elements {dx 1} {min 0} {char \#}} {
 		#a block is a unit for dealing with data frequency
 		# - $elements: a list of element names that is referred wile using counted array ($::dEx::V)
@@ -329,7 +329,7 @@ namespace eval ::dEx {
 			::dEx::output $filePath {NO DATA} $encoding;
 		};
 	};
-	#it outputs graph result as ascii art
+	#it outputs graph result as ASCII art
 	proc output_GRAPH {filePath {encoding {}}} {
 		# - $filePath: file path of file to output
 		# - $encoding: encoding name

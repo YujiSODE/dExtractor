@@ -37,6 +37,11 @@ proc dExUI {} {
 			::dEx::reset;
 			set ::dEx_UI::idx {};
 		};
+		#it sets data title
+		proc @title {TITLE} {
+			# - $TITLE: new title name
+			::dEx::title $TITLE;
+		};
 		#it reads a file as sample and updates sample counted data
 		#if all arguments are omitted then it only updates counted data
 		proc @read {{filePath {}} {char {}} {numerical 0} {encoding {}}} {
@@ -50,13 +55,29 @@ proc dExUI {} {
 			};
 			set idx [::dEx::count $::dEx::DATA $numerical];
 		};
+		#it makes a graph as ASCII art
+		proc @graph {{dx 1} {min 0} {char \#}} {
+			#a block is a unit for dealing with data frequency
+			# - $dx: a number (!$dx<1) that represents a value which is equivalent to a block in a graph; 1 is default value
+			# - $min: the least value (!$min<0) to show in a graph; 0 is default value
+			# - $char: a character that is used as a block in a graph; "\#" is default value
+			#idx is array index; a list of element names that is referred wile using counted array ($::dEx::V)
+			variable idx;
+			if {[llength $idx]} {
+				puts stdout [::dEx::graph $idx $dx $min $char];
+			} else {
+				puts stdout "Array index is invalid.\nPlease call \"@read\" to update array index.";
+			};
+		};
 		proc @help {} {
 			#it shows a list of help
-			puts stdout "- @help\;\n\tit shows this help.";
-			puts stdout "- @exit\;\n\tit ends this program.";
-			puts stdout "- @src filePath\;\n\tit loads additional Tcl script.\n\t - \$filePath: file path of Tcl script to load";
-			puts stdout "- @reset\;\n\tit resets internal parameters.";
-			puts stdout "- @read ?filePath? ?char? ?numerical? ?encoding?\;\n\tit reads a file as sample and updates sample counted data.\n\tif all arguments are omitted then it only updates counted data.\n\t - \$filePath: file path to read\n\t - \$char: split characters; standard white-space is default setting\n\t - \$numerical: boolean (0|1) indicates if it regards data as numerical data; 0 is default value\n\t - \$encoding: encoding name";
+			puts stdout "- @help\n\tit shows this help.";
+			puts stdout "- @exit\n\tit ends this program.";
+			puts stdout "- @src filePath\n\tit loads additional Tcl script.\n\t - \$filePath: file path of Tcl script to load";
+			puts stdout "- @reset\n\tit resets internal parameters.";
+			puts stdout "- @title TITLE\n\tit sets data title.\n\t - \$TITLE: new title name";
+			puts stdout "- @read ?filePath? ?char? ?numerical? ?encoding?\n\tit reads a file as sample and updates sample counted data.\n\tif all arguments are omitted then it only updates counted data.\n\t - \$filePath: file path to read\n\t - \$char: split characters; standard white-space is default setting\n\t - \$numerical: boolean (0|1) indicates if it regards data as numerical data; 0 is default value\n\t - \$encoding: encoding name";
+			puts stdout "- @graph ?dx? ?min? ?char?\n\tit makes a graph as ASCII art.\n\t a block is a unit for dealing with data frequency\n\t - \$dx: a number (!\$dx<1) that represents a value which is equivalent to a block in a graph; 1 is default value\n\t - \$min: the least value (!\$min<0) to show in a graph; 0 is default value\n\t - \$char: a character that is used as a block in a graph; \"\#\" is default value";
 		};
 		#*** Main procedure ***
 		proc UI_input {} {
@@ -81,9 +102,19 @@ proc dExUI {} {
 					::dEx_UI::@reset;
 					::dEx_UI::UI_input;
 				}
+				@title {
+					#it sets data title
+					::dEx_UI::@title [lindex $X 1];
+					::dEx_UI::UI_input;
+				}
 				@read {
 					#it reads a file as sample and updates sample counted data
 					eval ::dEx_UI::@read [lrange $X 1 end];
+					::dEx_UI::UI_input;
+				}
+				@graph {
+					#it makes a graph as ASCII art
+					eval ::dEx_UI::@graph [lrange $X 1 end];
 					::dEx_UI::UI_input;
 				}
 				@help {
