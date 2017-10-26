@@ -21,7 +21,9 @@ proc dExUI {} {
 		#it ends this program
 		proc @exit {} {
 			#!++++test output++++
-			variable ::dEx::DATA;puts "DATA: $DATA";
+			variable ::dEx::DATA;variable ::dEx::V;
+			puts "DATA: $DATA";
+			if {[array size V]} {parray V;};
 			#!+++++++++++++++++++
 			exit;
 		};
@@ -36,16 +38,15 @@ proc dExUI {} {
 			set ::dEx_UI::idx {};
 		};
 		#it reads a file as sample and updates sample counted data
-		proc @read {filePath {char {}} {numerical 0} {encoding {}}} {
+		#if all arguments are omitted then it only updates counted data
+		proc @read {{filePath {}} {char {}} {numerical 0} {encoding {}}} {
 			# - $filePath: file path of file to load
-			# - $char: split characters; standard white-space characters is default value
+			# - $char: split characters; standard white-space characters is default setting
 			# - $numerical: boolean (0|1) indicates if it regards data as numerical data; 0 is default value
 			# - $encoding: encoding name
 			variable idx;
-			if {[llength $encoding]} {
+			if {[llength $filePath]} {
 				::dEx::dRead $filePath $char $encoding;
-			} else {
-				::dEx::dRead $filePath $char;
 			};
 			set idx [::dEx::count $::dEx::DATA $numerical];
 		};
@@ -55,7 +56,7 @@ proc dExUI {} {
 			puts stdout "- @exit\;\n\tit ends this program.";
 			puts stdout "- @src filePath\;\n\tit loads additional Tcl script.\n\t - \$filePath: file path of Tcl script to load";
 			puts stdout "- @reset\;\n\tit resets internal parameters.";
-			puts stdout "- @read filePath ?char? ?numerical? ?encoding?\;\n\tit reads a file as sample and updates sample counted data.\n\t - \$filePath: file path to read\n\t - \$char: split characters; standard white-space is default value\n\t - \$numerical: boolean (0|1) indicates if it regards data as numerical data; 0 is default value\n\t - \$encoding: encoding name";
+			puts stdout "- @read ?filePath? ?char? ?numerical? ?encoding?\;\n\tit reads a file as sample and updates sample counted data.\n\tif all arguments are omitted then it only updates counted data.\n\t - \$filePath: file path to read\n\t - \$char: split characters; standard white-space is default setting\n\t - \$numerical: boolean (0|1) indicates if it regards data as numerical data; 0 is default value\n\t - \$encoding: encoding name";
 		};
 		#*** Main procedure ***
 		proc UI_input {} {
