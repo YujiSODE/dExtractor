@@ -8,7 +8,8 @@ https://github.com/YujiSODE/dExtractor
 ______
 ## Script
 It requires Tcl 8.6+.
-- `dExtractor.tcl`
+- Tools: `dExtractor.tcl`
+- User interface: `dExtractorUI.tcl`
 
 ## Details
 **Main procedures in namespace \(`::dEx`\)**
