@@ -14,6 +14,7 @@
 		# - $DATA: a list of raw data
 		# - $GRAPH: a list of graph parts
 		# - $V: an array of counted data; element names in this array are encoded with base64
+		# - $NUM: boolean (0|1) that indicates if it regards data as numerical data; 0 is default value
 	#== Main procedures ==
 		# - reset;
 			#it resets internal parameters
@@ -78,11 +79,13 @@ namespace eval ::dEx {
 	# - $DATA: a list of raw data
 	# - $GRAPH: a list of graph parts
 	# - $V: an array of counted data; element names in this array are encoded with base64
+	# - $NUM: boolean (0|1) that indicates if it regards data as numerical data; 0 is default value
 	variable TITLE {};
 	variable FILES {};
 	variable DATA {};
 	variable GRAPH {};
 	variable V;array set V {};
+	variable NUM 0;
 	#****** Procedures ******
 	#it resets internal parameters
 	proc reset {} {
@@ -100,7 +103,7 @@ namespace eval ::dEx {
 	proc toList {x {char {}}} {
 		# - $x: list or data that is separated by a character
 		# - $char: split characters; standard white-space characters is default value
-		variable DATA;
+		variable DATA;variable NUM;
 		#rEx is regular expression that matches empty strings
 		set rEx {^(?:)+$};
 		if {[llength $char]} {
@@ -130,16 +133,18 @@ namespace eval ::dEx {
 	#it counts elements in given list and returns a list of element names
 	proc count {l {numerical 0}} {
 		# - $l: a list
-		# - $numerical: boolean (0|1) indicates if it regards data as numerical data; 0 is default value
+		# - $numerical: boolean (0|1) that indicates if it regards data as numerical data; 0 is default value
 		#$V is counted array
-		variable V;
+		#$NUM (0|1) indicates if it regards data as numerical data; 0 is default value
+		variable V;variable NUM;
 		array unset V;
+		set NUM $numerical;
 		#sort is sorting order
-		set sort [expr {!!$numerical?{-real}:{-dictionary}}];
+		set sort [expr {!!$NUM?{-real}:{-dictionary}}];
 		#x64 is base64 encoded text
 		set x64 {};
 		#== extraction of numerical values ==
-		if {!!$numerical} {
+		if {!!$NUM} {
 			set l_sub {};
 			#rgEx is regular expression that matches real number
 			set rgEx {^(?:[+-]?[0-9]+(?:\.[0-9]+)?(?:[eE][+-]?[0-9]+(?:\.[0-9]+)?)?)$|^(?:\.[0-9]+)$};
@@ -152,7 +157,7 @@ namespace eval ::dEx {
 		};
 		foreach x $l {
 			#escaping
-			if {!$numerical} {
+			if {!$NUM} {
 				set x [string map {\| \\\| \/ \\\/ \\ \\\\ \. \\\. \, \\\, \; \\\; \: \\\: \( \\\( \) \\\) \[ \\\[ \] \\\] \{ \\\{ \} \\\} \$ \\\$ \! \\\! \? \\? \< \\\< \> \\\> \# \\\# \% \\\% \- \\\- \+ \\\+ \* \\\* \& \\\& \= \\\=} $x];
 			};
 			set x64 [binary encode base64 $x];
