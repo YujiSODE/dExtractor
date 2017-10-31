@@ -11,6 +11,9 @@ It requires Tcl 8.6+.
 - Tools: `dExtractor.tcl`
 - User interface: `dExtractorUI.tcl`
 
+This program consists of two namespaces: `::dEx` and `::dEx_UI`  
+These two files \(`dExtractor.tcl` and `dExtractorUI.tcl`\) should be placed under the same directory.
+
 ## Details
 **Main procedures in namespace \(`::dEx`\)**
 - `reset;`  
