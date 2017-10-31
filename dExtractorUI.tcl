@@ -116,7 +116,7 @@ proc dExUI {} {
 			puts stdout "- @title TITLE\n\tit sets data title.\n\t - \$TITLE: new title name\n";
 			puts stdout "- @read ?filePath? ?char? ?numerical? ?encoding?\n\tit reads a file as sample and updates sample counted data.\n\tif all arguments are omitted then it only updates counted data.\n\t - \$filePath: file path to read\n\t - \$char: split characters; standard white-space is default setting\n\t - \$numerical: boolean (0|1) indicates if it regards data as numerical data; 0 is default value\n\t - \$encoding: encoding name\n";
 			puts stdout "- @graph ?dx? ?min? ?char?\n\tit makes a graph as ASCII art.\n\t a block is a unit for dealing with data frequency\n\t - \$dx: a number (!\$dx<1) that represents a value which is equivalent to a block in a graph; 1 is default value\n\t - \$min: the least value (!\$min<0) to show in a graph; 0 is default value\n\t - \$char: a character that is used as a block in a graph; \"\#\" is default value\n";
-			puts stdout "- @ TITLE\n\tit sets data title.\n\t - \$TITLE: new title name\n";
+			puts stdout "- @title TITLE\n\tit sets data title.\n\t - \$TITLE: new title name\n";
 			puts stdout "- @output_help\n\tit shows a help of output.\n";
 		};
 		#it shows a help of output
