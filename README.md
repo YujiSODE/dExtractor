@@ -15,6 +15,8 @@ This program consists of two namespaces: `::dEx` and `::dEx_UI`
 These two files \(`dExtractor.tcl` and `dExtractorUI.tcl`\) should be placed under the same directory.
 
 ## Commands
+Any inputs are added into raw data list, excluding command beginning with "@".
+
 - `@help`  
   It shows help.  
 
