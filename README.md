@@ -14,6 +14,9 @@ It requires Tcl 8.6+.
 This program consists of two namespaces: `::dEx` and `::dEx_UI`  
 These two files \(`dExtractor.tcl` and `dExtractorUI.tcl`\) should be placed under the same directory.
 
+## Synopsis
+`tclsh dExtractorUI.tcl`
+
 ## Commands
 Any inputs are added into raw data list, excluding command beginning with "@".
 
