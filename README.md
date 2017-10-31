@@ -1,6 +1,7 @@
 # dExtractor
 Simple data extraction tool.  
-https://github.com/YujiSODE/dExtractor  
+GitHub: https://github.com/YujiSODE/dExtractor  
+Wiki: https://github.com/YujiSODE/dExtractor/wiki
 
 >Copyright (c) 2017 Yuji SODE \<yuji.sode@gmail.com\>  
 >This software is released under the MIT License.  
