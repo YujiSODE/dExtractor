@@ -96,3 +96,5 @@ Any inputs are added into raw data list, excluding command beginning with "@".
   It outputs log of the current values as tcl script.  
   - `$filePath`: file path of file to output
   - `$encoding`: encoding name
+
+For more details see [Wiki](https://github.com/YujiSODE/dExtractor/wiki)
